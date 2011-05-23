@@ -8,7 +8,7 @@ class StudentController extends Zend_Controller_Action
 	
 	public function preDispatch()
 	{
-		$this->studentService = new App_StudentService();
+		 $this->studentService = new App_StudentService();
 	}
 	
     public function init()
@@ -36,5 +36,5 @@ class StudentController extends Zend_Controller_Action
     	
     	$evalrows = $this->studentService->GetEvaluatedArtifacts($this->userID);
     	$this->view->evaluated = $evalrows;
-    }
+	}
 }

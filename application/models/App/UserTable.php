@@ -13,5 +13,11 @@ class App_UserTable extends Zend_Db_Table_Abstract {
 			'columns' => array('user_id'),
 			'refTableClass' => 'ArtifactTable',
 			'refColumns' => array('student_id')
-		)
+		),
+		'artifact' => array(
+        		'columns' => array('user_id'),
+        		'refTableClass' => 'ArtifactTable',
+        		'refColumns' => array('student_id')
+        	)
+	);
 }
