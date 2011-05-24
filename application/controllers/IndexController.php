@@ -14,7 +14,7 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         // Retreive the form and assign it to the view
-        $this->view->form = $this->getForm();
+	$this->view->form = $this->getForm();
     }
     
     public function loginAction()
@@ -57,7 +57,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function processAction()
-    {
+    { 
     	$request = $this->getRequest();
     	
         // Check if we have a POST request

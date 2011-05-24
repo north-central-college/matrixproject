@@ -103,7 +103,7 @@ class UserController extends Zend_Controller_Action
     }
     
     public function processAction()
-    {
+    { 
     	$request = $this->getRequest();
     	
 
@@ -124,7 +124,7 @@ class UserController extends Zend_Controller_Action
             $this->view->form = $form;
             return $this->render('index'); // re-render the login form
         }
-        
+        echo "valid";
 
         // Get our authentication adapter and check credentials
         

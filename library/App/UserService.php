@@ -11,12 +11,12 @@ class App_UserService {
     */
    	protected $user;
    
-   	 function __construct(){
+ 	function __construct(){
      	$options = array(
    	 	'host' => 'localhost', 
-   		'username' => 'patanasov', 
-   		'password' => 'patanasov',
-   		'dbname' => 'matrix_patanasov'
+   		'username' => 'mcdamske', 
+   		'password' => 'mcdamske',
+   		'dbname' => 'matrix_mcdamske'
    	);
    	
 		$this->db = Zend_Db::factory('PDO_MYSQL', $options);
@@ -25,14 +25,14 @@ class App_UserService {
 	}
 	public function NewTestUser(){
 	     $params = array(
-		      'username' => 'jccaruso',
-	      'last_name' => 'Caruso',
-	      'first_name' => 'Joe',
-	      'middle_initial' => 'C',
-	      'role' => 'U',
-	      'password' => 'joecaruso'
-		     );
-		     $this->user->insert($params);
+			'user_id' => '10',
+			'username' => 'gbluth',
+			'last_name' => 'Bluth',
+			'first_name' => 'George',
+			'middle_initial' => 'O',
+			'role' => 'F'
+		);
+   		$this->user->insert($params);
 	}
    
    	private function PrviateGetAllArtifactsForFacultyID($id)
