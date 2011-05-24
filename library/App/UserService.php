@@ -11,31 +11,29 @@ class App_UserService {
     */
    	protected $user;
    
-   	function __construct(){
+   	 function __construct(){
      	$options = array(
    	 	'host' => 'localhost', 
-   		'username' => 'mcdamske', 
-   		'password' => 'mcdamske',
-   		'dbname' => 'matrix_mcdamske'
+   		'username' => 'patanasov', 
+   		'password' => 'patanasov',
+   		'dbname' => 'matrix_patanasov'
    	);
    	
-   	$this->db = Zend_Db::factory('PDO_MYSQL', $options);
-   	Zend_Db_Table_Abstract::setDefaultAdapter($this->db);
-   	$this->user = new App_UserTable();
-	
-   	}
-   	public function NewTestUser(){
-     	
-		$params = array(
-			'user_id' => '10',
-			'username' => 'gbluth',
-			'last_name' => 'Bluth',
-			'first_name' => 'George',
-			'middle_initial' => 'O',
-			'role' => 'F'
-		);
-   		$this->user->insert($params);
-   	}
+		$this->db = Zend_Db::factory('PDO_MYSQL', $options);
+		Zend_Db_Table_Abstract::setDefaultAdapter($this->db);
+		$this->user = new App_UserTable();
+	}
+	public function NewTestUser(){
+	     $params = array(
+		      'username' => 'jccaruso',
+	      'last_name' => 'Caruso',
+	      'first_name' => 'Joe',
+	      'middle_initial' => 'C',
+	      'role' => 'U',
+	      'password' => 'joecaruso'
+		     );
+		     $this->user->insert($params);
+	}
    
    	private function PrviateGetAllArtifactsForFacultyID($id)
    	{   	 
@@ -84,6 +82,54 @@ class App_UserService {
    		$rowset = $this->user->fetchAll($select)->toArray();
    		return $rowset[0]["first_name"] . " " . $rowset[0]["last_name"];
    	}
+	public function SelectUser($username, $password){
+   		$select = $this->db->select()->from('user', 'username')->where("username = '$username'");
+   		$stmt = $select->query();
+   		
+   		
+   		$select2 = $this->db->select()->from('user', 'password')->where("username = '$username'");
+   		$stmt2 = $select2->query();
+   		
+   		
+   		/*if (count($stmt2->fetchAll()) == 0)
+   		{
+   			return array('0' => 'invalid');
+   		}*/
+   		
+   		return $stmt2->fetchAll();
+	}
+   
+	public function ValidUserPassword($username, $password){
+   		$result = false;
+   		
+   		$select = $this->db->select()->from('user', 'password')->where("username = '$username'");
+   		$stmt = $select->query();
+   		
+   		$passwordEntry = $stmt->fetchAll();
+   		
+   		if (count($passwordEntry) > 0)
+   		{
+   			$passwordArray = $passwordEntry[0];
+   			
+   			if ($passwordArray['password'] == $password)
+   			{
+   				$result = true;
+   			}
+   		}
+   
+   		return $result;
+	}
+   
+	public function GetUserRole($username){
+   		$select = $this->db->select()->from('user', 'role')->where("username = '$username'");
+   		$stmt = $select->query();
+   		
+   		$roleEntry = $stmt->fetchAll();
+   		
+   		$roleArray = $roleEntry[0];
+   		
+   		return $roleArray['role'];		
+	}
 }
 
 
