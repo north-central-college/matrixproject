@@ -152,6 +152,7 @@ class UserController extends Zend_Controller_Action
         
         if ($valid)
         {
+	 //echo"sdfasdf";
         	//$this->error_flag = FALSE;
         	//$this->view->error_flag = $this->error_flag;
         	$userRole = $userService->GetUserRole($username);

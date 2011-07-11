@@ -1,8 +1,7 @@
 <?php
 class Application_Model_LoginForm extends Zend_Form
 {
-
-		public function __construct($options = null){
+public function __construct($options = null){
                 parent::__construct($options);
                 $this->setName('artifact_title');
                 $this->setMethod('POST');

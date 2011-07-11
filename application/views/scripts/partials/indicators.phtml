@@ -1,0 +1,93 @@
+<dt>
+Indicator: <?= $this->indicator_number; ?> - <?= $this->description; ?>
+</dt>
+<?php echo "<table id=\"indicator_artifact_table\">";?>
+<?php echo "<tr>";
+echo "<th>Artifact Title</th>";
+echo "<th>Course</th>";
+echo "<th>Rating</th>";
+echo "<th>Cover Letter</th>";
+echo "<th>Cover Letter Rating</th>";
+echo "<th>Evaluated By</th>";
+echo "</tr>";?>
+
+<br></br>
+
+<?php 
+$options = array(
+   	 		'host' => 'localhost', 
+   			'username' => 'sewrobleski', 
+   			'password' => 'swmatrix',
+   			'dbname' => 'matrix_sewrobleski');
+$this->db = Zend_Db::factory('PDO_MYSQL', $options);
+Zend_Db_Table_Abstract::setDefaultAdapter($this->db);
+$student_id =2;
+$select = $this->db->select()
+   			->from(array('a' => 'artifact'), array('a.artifact_id', 
+'a.artifact_title', 'c.course_number', 'arc' => 'ar.rating_code'))
+   			->join(array('ais'=>'artifact_indicator_status'), 'a.artifact_id = 
+ais.artifact_id')
+   			->joinLeft(array('ar'=>'artifact_rating'), 'ar.artifact_id = 
+ais.artifact_id')
+   			 ->joinLeft(array('rs'=>'reflective_statement'), 'rs.artifact_id = 
+a.artifact_id')
+   			->joinLeft(array('rsr'=>'reflective_statement_rating'), 
+'rsr.reflective_statement_id = rs.reflective_statement_id')
+   			->joinLeft(array('c'=>'course'), 'a.course_id = c.course_id')   			
+			->joinLeft(array('u'=>'user'), 'u.user_id = rsr.rating_user_id')
+   			->where('ais.indicator_id = ?', $this->indicator_id)
+   			->where('a.student_id = ?', $student_id);    			
+
+   			$result = $this->db->fetchAll($select);
+$i=0;
+
+foreach ($result as $row) 
+{
+	
+	
+
+	
+
+	
+echo "<tr><td>";
+echo $result[$i]['artifact_title'];
+echo "</td>";
+echo "<td>";
+echo $result[$i]['course_number'];
+echo "</td>";
+echo "<td>";
+	if($result[$i]['arc'] != NULL)
+	{
+	$rsr = $this->db->select()
+	->from('rating', 'description')
+	->where('rating_code = ?', $result[$i]['arc']);
+	$ar_res = $this->db->fetchRow($rsr);
+	echo $ar_res['description'];
+	}
+echo "</td>";
+echo "<td>";
+echo $result[$i]['filename'];
+echo "</td>";
+echo "<td>";
+	if($result[$i]['rating_code'] != NULL)
+	{
+	$ar = $this->db->select()
+	->from('rating', 'description')
+	->where('rating_code = ?', $result[$i]['rating_code']);
+	$ref_res = $this->db->fetchRow($ar);
+	echo $ref_res['description'];
+	}	
+echo "</td>";
+echo "<td>";
+echo $result[$i]['first_name'];
+echo " ";
+echo $result[$i]['last_name'];
+echo "</td></tr>";
+$i++;
+}
+echo "</table>";
+if(!$result){
+	echo "No artifacts linked to this indicator.<br />";
+}
+?>
+<br></br>

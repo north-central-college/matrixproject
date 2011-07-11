@@ -2,6 +2,7 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+                                      
 /*
 $frontController = Zend_Controller_Front::getInstance();
 $frontController->registerPlugin(new Initializer('development'));

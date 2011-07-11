@@ -106,7 +106,7 @@ class UserService {
    
    public function NewTestStudent(){
         $params = array(
-        				'username' => 'jrdinkelman',
+        			'username' => 'jrdinkelman',
                 		'last_name' => 'Dinkle',
             			'first_name' => 'Jeff3',
                 		'middle_initial' => 'R',
@@ -219,6 +219,93 @@ class StudentartifactController extends Zend_Controller_Action
                 'method' => 'post',
         ));*/    	
     }
+    /**
+    * JD
+    * A public funtion returning information about a single artifact, including
+    * all the tables about its status and rating.
+    * Should rely on session variables for the $id. Hard-coded to user 1 for now.
+    * @param int $id - student id number
+    * @param int $aid - artifact id number
+    */   
+   public function GetAllArtifactDetails($id, $aid)
+   {
+   		$select = $this->db->select()
+   			->from(array('a' => 'artifact'), array('artifact_id', 'artifact_title', 'description', 'a.timestamp as upload_timestamp'))
+   			->from(array('ais' => 'artifact_indicator_status'), array('artifact_id', 'indicator_id', 'status_code', 'ais.timestamp as link_timestamp'))
+   			->from(array('ar' => 'artifact_rating'), array('artifact_rating_id', 'artifact_id', 'indicator_id', 'rating_user_id', 'rating_code', 'ar.timestamp as eval_timestamp'))
+   			->join(array('u'=>'user'), 'a.student_id = u.user_id &&
+   										ais.artifact_id = a.artifact_id &&
+   										ar.artifact_id = ais.artifact_id &&
+   										ar.indicator_id = ais.indicator_id')
+   			->where('u.user_id = ?', $id)
+   			->where('a.artifact_id = ?', $aid);
+   		return $this->db->fetchAll($select);
+   }
+
+}
+
+class StudentartifactController extends Zend_Controller_Action
+{
+
+	protected $userService;
+	
+    public function init()
+    {
+        /* Initialize action controller here */
+    }
+    
+    //Preloads the UserService.
+    public function preDispatch()
+    {    	
+        $this->userService = new UserService();
+    }
+    
+    
+   /**
+    * JD
+    * Handles the setup to display the artifact detail page.  Relies on information stored
+    * in the URL to get details about the artifact in question.
+    */  
+    public function artAction()
+    {
+    	$this->view->curArt = $this->userService->GetAllArtifactDetails(1, $_GET['aid']);
+    }
+    
+   /**
+    * JD
+    * Handles the setup to display the student artifact page.  
+    * Should rely on session variables for the user id. Hard-coded to user 1 for now.
+    */  
+    public function indexAction()
+      {
+      		$form = new App_FormStart();
+      		
+      
+      if($this->_request->isPost())
+      	{
+      		$formData = $this->_request->getPost();
+	            if ($form->isValid($formData)) {
+	
+	                // success - do something with the uploaded file
+	                $uploadedData = $form->getValues();
+	                $fullFilePath = $form->file->getFileName();
+	
+	                Zend_Debug::dump($uploadedData, '$uploadedData');
+	                Zend_Debug::dump($fullFilePath, '$fullFilePath');
+	
+	                echo "done";
+	                exit;
+	
+	            } else {
+	                $form->populate($formData);
+	            }
+            }
+            
+            $this->view->form = $form;
+            //Below is where the user id is directly passed into a function.
+            $rowset = $this->userService->GetAllArtifacts(1);        
+        	$this->view->user = $rowset;
+      }    
     
 
 }

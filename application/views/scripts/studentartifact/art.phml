@@ -1,0 +1,25 @@
+<dl>
+<!-- I don't know why this next line keeps giving an error.
+	 It still prints the title of the artifact in question. JD-->
+<h2><?= $this->curArt[0][artifact_title]; ?></h2>
+
+<?php echo "<table id=\"artifact_detail_table\" class =\"student_artifact_table\" 
+cellspacing=\"0\">";?>
+<?php echo "<tr>";
+          echo "<th>Linked Indicator</th>";
+          echo "<th>Time Linked</th>";
+          echo "<th>Current Status</th>";
+          echo "<th>Time Submitted</th>";          
+          echo "<th>Submitted To</th>";
+          echo "<th>Rating Recieved</th>";
+          echo "<th>Cover Sheet Details</th>";
+          echo "<th>Comments</th>";
+          echo "</tr>";
+        ?>
+
+<dl>
+<?= $this->partialLoop('studentartifact/artRow.phtml', $this->curArt);?>
+
+<?php echo "</table>" ?>
+</dl>
+

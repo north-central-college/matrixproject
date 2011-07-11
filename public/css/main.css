@@ -21,11 +21,11 @@ body {
 	
 }
 #side-navbar {
-	width:120px; 
+	width:180px; 
 	background-color:#fff; 
 	float:left; 
 	border-right: 1px dashed #ddd;
-	padding: 10px 0 0 8px;
+	padding: 0px 0 0 8px;
 	margin-right: 10px;
 	min-height: 600px;              
 }
@@ -57,21 +57,14 @@ body {
 	font-size: 24px;
 	
 }
-#side-navbar {
-	width:120px; 
-	background-color:#fff; 
-	float:left; 
-	border-right: 1px dashed #ddd;
-	padding: 10px 0 0 8px;
-	margin-right: 10px;
-	min-height: 400px;              
-}
 #content {
 	background-color:#fff; 
 	padding:8px;
 	color: #333;
 }
-
+li{
+	list-style: none;
+}
 a {
 	
 	font-family: helvetica, sans-serif;
@@ -100,3 +93,89 @@ td {
 	padding-left:  10px;
 	padding-right: 10px;
 	text-align:    center;
+	/* Faculty Pending Table style */
+.faculty_pending_table a {
+	
+	font-family: helvetica, sans-serif;
+	color: #ffffff; 
+}
+
+.faculty_pending_table th {
+	
+	background-color: #333333;
+	margin-left:      0px;
+	margin-right:     0px;
+	padding-left:     20px;
+	padding-right:    20px;
+	
+}
+
+.faculty_pending_table_row {
+	cursor: pointer;
+}
+
+.faculty_pending_table_row:hover {
+	cursor: pointer;
+	background-color: #cccccc;
+}
+
+/* End Table style */
+
+/* Faculty approve artifact style */
+#approveArtifactContent {
+
+}
+
+#artifactComments {
+	height: 200px;
+	width: 700px;
+
+}
+
+#coverLetterComments {
+	height: 200px;
+	width: 700px;
+}
+
+#saveAndQuit {
+	position: absolute;	
+	left: 700px;	
+}
+
+#saveAndSubmit {
+	margin-top: 10px;
+	position: absolute;
+	left: 700px;
+}
+
+#approveArtifactFormSeperator{
+	width:700px;
+	margin:auto;
+	float:left;
+	border-top:1px solid #ccc;
+}
+/* End Faculty approve artifact style */
+
+
+
+/**
+ * KG and PA
+ * This changes the color and indent of error messages.
+ * We currently use it to display login errors.
+ */
+error {
+	color: #FF0000;
+	margin-left: 30px;
+}
+
+/**
+ * KG and PA
+ * This changes the indent of the login form.
+ */
+div#login {
+	margin-top: 75px;
+	margin-left: 200px;
+
+}
+
+/*  END KG AND PA */
